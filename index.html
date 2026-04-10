@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kapoor Dikshit & Associates | Chartered Accountants, Ludhiana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:      #0f1f3d;
+      --navy-lt:   #1e3460;
+      --gold:      #c8a45a;
+      --gold-lt:   #e2c07a;
+      --gold-dim:  rgba(200,164,90,0.18);
+      --white:     #ffffff;
+      --off-white: #f5f3ef;
+      --cream:     #ede9e1;
+      --text:      #2a2a2a;
+      --text-mid:  #555;
+      --text-lt:   #888;
+      --border:    #ddd5c5;
+      --border-lt: #eae5dc;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Jost', sans-serif; font-weight: 300; color: var(--text); background: var(--white); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--navy); display: flex; align-items: center; justify-content: space-between; padding: 0 3.5rem; height: 68px; }
+    .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-emblem { width: 38px; height: 38px; border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-emblem svg { width: 20px; height: 20px; }
+    .nav-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 500; color: var(--white); line-height: 1.25; letter-spacing: 0.02em; }
+    .nav-name span { display: block; font-family: 'Inconsolata', monospace; font-size: 0.55rem; font-weight: 300; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-top: 1px; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { padding: 0.5rem 1.3rem; background: var(--gold); color: var(--navy) !important; font-weight: 500 !important; }
+    .nav-cta:hover { background: var(--gold-lt) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--gold); transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-nav { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: var(--navy); z-index: 199; padding: 1.5rem 2rem; gap: 1.2rem; border-top: 1px solid rgba(200,164,90,0.2); }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s; }
+    .mobile-nav a:hover { color: var(--gold); }
+
+    /* BANNER */
+    .prop-banner { background: var(--gold); padding: 0.55rem 3.5rem; margin-top: 68px; display: flex; align-items: center; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+    .prop-banner-text { font-family: 'Inconsolata', monospace; font-size: 0.67rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); font-weight: 400; text-align: center; }
+    .prop-dot { color: var(--navy); opacity: 0.4; }
+
+    /* HERO */
+    #hero { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100svh - 104px); }
+    .hero-left { background: var(--navy); padding: 5rem 4rem 5rem 3.5rem; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+    .hero-left::before { content: ''; position: absolute; top: -80px; left: -80px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(200,164,90,0.08), transparent 70%); pointer-events: none; }
+    .hero-left::after { content: ''; position: absolute; bottom: 3rem; right: 3rem; width: 80px; height: 80px; border-right: 1px solid rgba(200,164,90,0.3); border-bottom: 1px solid rgba(200,164,90,0.3); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 2rem; }
+    .hero-badge-line { width: 28px; height: 1px; background: var(--gold); }
+    .hero-badge-text { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.6rem); font-weight: 400; line-height: 1.12; color: var(--white); margin-bottom: 1.5rem; }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-desc { font-size: 0.92rem; line-height: 1.8; color: rgba(255,255,255,0.55); max-width: 420px; margin-bottom: 2.8rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-gold { padding: 0.85rem 2rem; background: var(--gold); color: var(--navy); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: background 0.22s, transform 0.18s; display: inline-block; }
+    .btn-gold:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .btn-ghost { padding: 0.85rem 2rem; background: transparent; color: rgba(255,255,255,0.7); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); transition: border-color 0.22s, color 0.22s; display: inline-block; }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; }
+    .h-stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .h-stat-lbl { font-family: 'Inconsolata', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 0.35rem; }
+    .hero-right { background: var(--cream); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 5rem 3.5rem; position: relative; }
+    .hero-right-bg { position: absolute; font-family: 'Playfair Display', serif; font-size: 14rem; font-weight: 700; color: rgba(15,31,61,0.04); user-select: none; pointer-events: none; top: 50%; left: 50%; transform: translate(-50%,-50%); white-space: nowrap; }
+    .hero-contact-card { background: var(--white); border: 1px solid var(--border); padding: 2.5rem; width: 100%; max-width: 420px; position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.06); animation: fadeUp 0.8s 0.4s ease both; }
+    .hero-contact-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 500; color: var(--navy); margin-bottom: 0.3rem; }
+    .card-sub { font-size: 0.8rem; color: var(--text-lt); margin-bottom: 1.8rem; }
+    .qform { display: flex; flex-direction: column; gap: 0.85rem; }
+    .qform input, .qform select, .qform textarea { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); background: var(--off-white); font-family: 'Jost', sans-serif; font-size: 0.87rem; color: var(--text); outline: none; transition: border-color 0.2s; resize: none; appearance: none; -webkit-appearance: none; }
+    .qform input:focus, .qform select:focus, .qform textarea:focus { border-color: var(--gold); background: var(--white); }
+    .qform input::placeholder, .qform textarea::placeholder { color: var(--text-lt); }
+    .qform select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; cursor: pointer; }
+    .qform select option { background: var(--white); }
+    .qform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .qform-submit { width: 100%; padding: 0.9rem; background: var(--navy); color: var(--white); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.22s; margin-top: 0.3rem; }
+    .qform-submit:hover { background: var(--navy-lt); }
+
+    /* SECTION COMMONS */
+    .section { padding: 6rem 3.5rem; }
+    .section-inner { max-width: 1220px; margin: 0 auto; }
+    .tag { display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+    .tag-line { width: 22px; height: 1.5px; background: var(--gold); }
+    .tag-text { font-family: 'Inconsolata', monospace; font-size: 0.63rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 3.8vw, 3rem); font-weight: 400; line-height: 1.15; color: var(--navy); margin-bottom: 1rem; }
+    .section-title em { font-style: italic; }
+    .section-sub { font-size: 0.95rem; color: var(--text-mid); line-height: 1.8; max-width: 540px; }
+
+    /* ABOUT */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3rem; }
+    .about-img-wrap { background: var(--navy); aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .about-floating-card { position: absolute; bottom: -1.5rem; right: -1.5rem; background: var(--white); border: 1px solid var(--border); padding: 1.2rem 1.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+    .afc-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .afc-txt { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-lt); margin-top: 0.3rem; }
+    .about-text { font-size: 0.95rem; color: var(--text-mid); line-height: 1.85; }
+    .about-text + .about-text { margin-top: 1rem; }
+    .about-quote { margin: 2rem 0; padding: 1.4rem 1.8rem; border-left: 3px solid var(--gold); background: var(--off-white); font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.08rem; color: var(--navy); line-height: 1.6; }
+    .prop-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--gold-dim); border: 1px solid var(--gold); padding: 0.4rem 0.9rem; margin-bottom: 1.5rem; }
+    .prop-tag-text { font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--navy); }
+    .partner-chip { display: inline-flex; align-items: center; gap: 0.7rem; background: var(--off-white); border: 1px solid var(--border); padding: 0.7rem 1rem; margin-top: 2rem; }
+    .partner-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--gold); }
+    .partner-name { font-size: 0.82rem; font-weight: 500; color: var(--navy); }
+    .partner-title { font-size: 0.7rem; color: var(--text-lt); margin-top: 1px; }
+
+    /* SERVICES */
+    #services { background: var(--off-white); }
+    .services-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5px; background: var(--border); }
+    .svc-card { background: var(--white); padding: 2rem; position: relative; overflow: hidden; transition: background 0.25s; }
+    .svc-card:hover, .svc-card.highlight { background: var(--navy); }
+    .svc-card:hover .svc-num, .svc-card.highlight .svc-num { color: rgba(200,164,90,0.35); }
+    .svc-card:hover .svc-icon-wrap, .svc-card.highlight .svc-icon-wrap { background: rgba(200,164,90,0.12); border-color: rgba(200,164,90,0.3); }
+    .svc-card:hover .svc-title, .svc-card.highlight .svc-title { color: var(--white); }
+    .svc-card:hover .svc-desc, .svc-card.highlight .svc-desc { color: rgba(255,255,255,0.45); }
+    .svc-card:hover .svc-tags span, .svc-card.highlight .svc-tags span { background: rgba(200,164,90,0.15); color: var(--gold); border-color: rgba(200,164,90,0.3); }
+    .svc-card.highlight::after { content: 'SPECIALITY'; position: absolute; top: 0.8rem; right: 0.8rem; font-family: 'Inconsolata', monospace; font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(200,164,90,0.4); padding: 0.15rem 0.4rem; }
+    .svc-num { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--border); margin-bottom: 1.2rem; transition: color 0.25s; }
+    .svc-icon-wrap { width: 42px; height: 42px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; transition: background 0.25s, border-color 0.25s; }
+    .svc-icon { font-size: 1.2rem; }
+    .svc-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 500; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.3; transition: color 0.25s; }
+    .svc-desc { font-size: 0.81rem; color: var(--text-mid); line-height: 1.75; transition: color 0.25s; margin-bottom: 1rem; }
+    .svc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .svc-tags span { font-family: 'Inconsolata', monospace; font-size: 0.58rem; letter-spacing: 0.1em; padding: 0.2rem 0.55rem; background: var(--off-white); border: 1px solid var(--border); color: var(--text-lt); transition: all 0.25s; }
+
+    /* WHY */
+    #why { background: var(--navy); }
+    #why .section-title { color: var(--white); }
+    #why .section-sub { color: rgba(255,255,255,0.45); }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3.5rem; }
+    .why-card { padding: 2rem; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); transition: background 0.25s, border-color 0.25s; }
+    .why-card:hover { background: rgba(200,164,90,0.07); border-color: rgba(200,164,90,0.25); }
+    .why-icon { font-size: 1.6rem; margin-bottom: 1.2rem; display: block; }
+    .why-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); margin-bottom: 0.6rem; }
+    .why-desc { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.75; }
+
+    /* TESTIMONIALS */
+    #testimonials { background: var(--white); }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .testi-card { border: 1px solid var(--border-lt); padding: 2rem; position: relative; transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s; }
+    .testi-card:hover { border-color: var(--gold); box-shadow: 0 6px 30px rgba(200,164,90,0.1); transform: translateY(-4px); }
+    .testi-stars { color: var(--gold); font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 1.2rem; }
+    .testi-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.98rem; color: var(--text); line-height: 1.75; margin-bottom: 1.5rem; }
+    .testi-author { display: flex; align-items: center; gap: 0.9rem; border-top: 1px solid var(--border-lt); padding-top: 1.2rem; }
+    .testi-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold); flex-shrink: 0; }
+    .testi-name { font-size: 0.87rem; font-weight: 500; color: var(--navy); }
+    .testi-role { font-size: 0.72rem; color: var(--text-lt); margin-top: 2px; }
+
+    /* CONTACT */
+    #contact { background: var(--off-white); }
+    .contact-layout { display: grid; grid-template-columns: 5fr 7fr; gap: 5rem; margin-top: 3rem; align-items: start; }
+    .contact-info-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.8rem; }
+    .cinfo-item { display: flex; gap: 1.1rem; align-items: flex-start; }
+    .cinfo-icon-box { width: 42px; height: 42px; flex-shrink: 0; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .cinfo-label { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+    .cinfo-value { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+    .cinfo-value a { color: var(--navy); text-decoration: none; }
+    .cinfo-value a:hover { color: var(--gold); }
+    .main-form-card { background: var(--white); border: 1px solid var(--border); padding: 3rem; position: relative; }
+    .main-form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); }
+    .mform-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy); margin-bottom: 0.3rem; }
+    .mform-sub { font-size: 0.82rem; color: var(--text-lt); margin-bottom: 2rem; }
+    .mform { display: flex; flex-direction: column; gap: 1.1rem; }
+    .mform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    .mfield { display: flex; flex-direction: column; gap: 0.35rem; }
+    .mfield label { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-lt); }
+    .mfield input, .mfield select, .mfield textarea { padding: 0.8rem 1rem; border: 1px solid var(--border); background: var(--off-white); font-family: 'Jost', sans-serif; font-size: 0.88rem; color: var(--text); outline: none; resize: none; transition: border-color 0.2s, background 0.2s; appearance: none; -webkit-appearance: none; }
+    .mfield input:focus, .mfield select:focus, .mfield textarea:focus { border-color: var(--gold); background: var(--white); }
+    .mfield input::placeholder, .mfield textarea::placeholder { color: var(--text-lt); }
+    .mfield select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; cursor: pointer; }
+    .mfield select option { background: var(--white); }
+    .mform-btn { padding: 1rem; background: var(--navy); color: var(--white); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.22s; margin-top: 0.3rem; }
+    .mform-btn:hover { background: var(--navy-lt); }
+
+    /* FOOTER */
+    footer { background: var(--navy); padding: 4rem 3.5rem 2rem; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1.2fr 1.5fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 2rem; }
+    .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 500; color: var(--white); margin-bottom: 0.3rem; }
+    .footer-brand-sub { font-family: 'Inconsolata', monospace; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.25rem; }
+    .footer-prop-note { font-family: 'Inconsolata', monospace; font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(200,164,90,0.5); margin-bottom: 1rem; }
+    .footer-brand-desc { font-size: 0.83rem; color: rgba(255,255,255,0.35); line-height: 1.7; max-width: 240px; }
+    .footer-col-title { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-links a { font-size: 0.83rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-contact-item { display: flex; flex-direction: column; gap: 0.2rem; margin-bottom: 0.9rem; }
+    .footer-contact-label { font-family: 'Inconsolata', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(200,164,90,0.5); }
+    .footer-contact-val { font-size: 0.83rem; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .footer-contact-val a { color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer-contact-val a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.2); }
+    .footer-icai { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.1em; color: rgba(200,164,90,0.4); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .hero-left > * { animation: fadeUp 0.8s ease both; }
+    .hero-badge { animation-delay: 0.1s; } .hero-title { animation-delay: 0.25s; }
+    .hero-desc { animation-delay: 0.4s; } .hero-btns { animation-delay: 0.5s; }
+    .hero-stats { animation-delay: 0.6s; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) { .services-grid { grid-template-columns: repeat(3, 1fr); } .why-grid { grid-template-columns: repeat(2, 1fr); } .footer-top { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; } .nav-links { display: none; } .hamburger { display: flex; }
+      .prop-banner { padding: 0.55rem 1.5rem; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 4rem 1.5rem 3rem; } .hero-right { padding: 3rem 1.5rem 4rem; } .hero-right-bg { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; } .about-floating-card { display: none; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .testi-grid { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .section { padding: 4.5rem 1.5rem; } footer { padding: 3rem 1.5rem 2rem; } .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; } .why-grid { grid-template-columns: 1fr; }
+      .mform-row { grid-template-columns: 1fr; } .qform-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; } .footer-top { grid-template-columns: 1fr; }
+      .main-form-card { padding: 2rem 1.2rem; } .hero-contact-card { padding: 2rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-brand">
+    <div class="nav-emblem">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c8a45a" stroke-width="1.5">
+        <path d="M3 6l9-4 9 4v6c0 5-4 9-9 10C7 21 3 17 3 12V6z"/>
+        <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="nav-name">Kapoor Dikshit &amp; Associates<span>Chartered Accountants · Ludhiana</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-nav" id="mobNav">
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#services" onclick="closeMob()">Services</a>
+  <a href="#testimonials" onclick="closeMob()">Testimonials</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- PROPRIETORSHIP BANNER -->
+<div class="prop-banner">
+  <span class="prop-banner-text">Proprietorship Firm</span>
+  <span class="prop-dot">·</span>
+  <span class="prop-banner-text">Est. 2017</span>
+  <span class="prop-dot">·</span>
+  <span class="prop-banner-text">FEMA Matters</span>
+  <span class="prop-dot">·</span>
+  <span class="prop-banner-text">GST &amp; Income Tax Litigation</span>
+  <span class="prop-dot">·</span>
+  <span class="prop-banner-text">Ludhiana, Punjab</span>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><div class="hero-badge-line"></div><span class="hero-badge-text">Chartered Accountants · Est. 2017 · Ludhiana</span></div>
+    <h1 class="hero-title">Trusted Financial<br>Counsel, <em>Delivered</em><br>with Integrity.</h1>
+    <p class="hero-desc">A proprietorship CA firm in Ludhiana specialising in FEMA matters, GST &amp; Income Tax litigation, CMA reports for bank finance, GST returns, ITR filing, and complete financial management services.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-gold">Explore Services</a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="h-stat-num">2017</div><div class="h-stat-lbl">Year Established</div></div>
+      <div><div class="h-stat-num">400+</div><div class="h-stat-lbl">Clients Served</div></div>
+      <div><div class="h-stat-num">98%</div><div class="h-stat-lbl">Client Retention</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg">CA</div>
+    <div class="hero-contact-card">
+      <div class="card-title">Get a Free Consultation</div>
+      <p class="card-sub">Call / WhatsApp: <strong style="color:var(--navy);">+91 81950 08886</strong></p>
+      <div class="qform">
+        <div class="qform-row">
+          <input type="text" placeholder="Full Name" />
+          <input type="tel" placeholder="Phone Number" />
+        </div>
+        <input type="email" placeholder="Email Address" />
+        <select>
+          <option value="" disabled selected>Select a Service</option>
+          <option>GST Returns &amp; Filing</option>
+          <option>Income Tax Returns (ITR)</option>
+          <option>GST Litigation &amp; Appeals</option>
+          <option>Income Tax Litigation &amp; Appeals</option>
+          <option>FEMA &amp; Cross-border Matters</option>
+          <option>CMA Report for Bank Finance</option>
+          <option>Financial Management / CFO Services</option>
+          <option>Statutory Audit</option>
+          <option>NRI Taxation</option>
+          <option>Corporate / ROC Compliance</option>
+          <option>Other</option>
+        </select>
+        <textarea rows="3" placeholder="Briefly describe your requirement…"></textarea>
+        <button class="qform-submit" onclick="heroSubmit()">Send Enquiry →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal" style="position:relative;">
+        <svg viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:260px;opacity:0.85;padding:2rem;">
+          <rect x="20" y="30" width="140" height="140" rx="2" stroke="#c8a45a" stroke-width="1"/>
+          <rect x="40" y="50" width="100" height="8" rx="1" fill="rgba(200,164,90,0.3)"/>
+          <rect x="40" y="68" width="80" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
+          <rect x="40" y="80" width="90" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
+          <rect x="40" y="92" width="70" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
+          <line x1="40" y1="115" x2="140" y2="115" stroke="rgba(200,164,90,0.25)" stroke-width="1"/>
+          <rect x="40" y="124" width="100" height="6" rx="1" fill="rgba(200,164,90,0.15)"/>
+          <rect x="40" y="136" width="60" height="6" rx="1" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="195" cy="75" r="30" stroke="#c8a45a" stroke-width="1.5" fill="rgba(200,164,90,0.07)"/>
+          <path d="M183 75l8 8 14-16" stroke="#c8a45a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="170" y="130" width="14" height="30" rx="1" fill="rgba(200,164,90,0.25)"/>
+          <rect x="190" y="118" width="14" height="42" rx="1" fill="rgba(200,164,90,0.4)"/>
+          <rect x="210" y="108" width="14" height="52" rx="1" fill="rgba(200,164,90,0.6)"/>
+          <line x1="165" y1="162" x2="230" y2="162" stroke="rgba(200,164,90,0.3)" stroke-width="1"/>
+        </svg>
+        <div class="about-floating-card"><div class="afc-num">2017</div><div class="afc-txt">Established · Ludhiana</div></div>
+      </div>
+      <div class="reveal">
+        <div class="tag"><div class="tag-line"></div><span class="tag-text">About the Firm</span></div>
+        <div class="prop-tag"><span style="font-size:0.9rem;">🏛️</span><span class="prop-tag-text">Proprietorship Firm · Chartered Accountant · Est. 2017</span></div>
+        <h2 class="section-title">A Practice Built on <em>Expertise</em> &amp; Trust</h2>
+        <blockquote class="about-quote">"We do not merely crunch numbers — we architect financial clarity and fight for every client's rightful position before the law."</blockquote>
+        <p class="about-text">Kapoor Dikshit and Associates is a proprietorship Chartered Accountancy firm established in 2017 and headquartered in Ludhiana, Punjab. The firm specialises in FEMA matters, GST &amp; Income Tax litigation and appeals, CMA report drafting for bank finances, GST returns, income tax returns, and complete financial management services.</p>
+        <p class="about-text">From first-generation entrepreneurs filing their first GST return to businesses fighting complex disputes before the GST Appellate Authority and Income Tax Appellate Tribunal (ITAT) — we bring the same meticulous dedication and personalised attention to every client.</p>
+        <div class="partner-chip">
+          <div class="partner-avatar">KD</div>
+          <div><div class="partner-name">CA Kapoor Dikshit</div><div class="partner-title">Proprietor &amp; Founder</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section">
+  <div class="section-inner">
+    <div class="services-header reveal">
+      <div>
+        <div class="tag"><div class="tag-line"></div><span class="tag-text">Comprehensive CA Services</span></div>
+        <h2 class="section-title">Everything Your Business <em>Needs</em></h2>
+      </div>
+      <p class="section-sub" style="max-width:300px;">From GST returns and income tax filings to FEMA compliance, litigation, CMA reports, and financial management.</p>
+    </div>
+    <div class="services-grid">
+
+      <!-- 01 GST RETURNS -->
+      <div class="svc-card reveal">
+        <div class="svc-num">01</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">🧾</span></div>
+        <h3 class="svc-title">GST Returns &amp; Filing</h3>
+        <p class="svc-desc">Timely and accurate filing of all GST returns — GSTR-1, GSTR-3B, GSTR-9 annual return, GSTR-9C reconciliation statement, and ITC matching. We ensure zero penalties and maximum input tax credit utilisation for your business.</p>
+        <div class="svc-tags"><span>GSTR-1</span><span>GSTR-3B</span><span>GSTR-9/9C</span><span>ITC Reconciliation</span></div>
+      </div>
+
+      <!-- 02 INCOME TAX RETURNS -->
+      <div class="svc-card reveal">
+        <div class="svc-num">02</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">📄</span></div>
+        <h3 class="svc-title">Income Tax Returns (ITR)</h3>
+        <p class="svc-desc">Filing of ITR for individuals, HUFs, partnership firms, LLPs, and companies. Includes tax computation, advance tax planning, TDS compliance, Form 26AS &amp; AIS reconciliation, capital gains computation, and agricultural income reporting.</p>
+        <div class="svc-tags"><span>ITR-1 to ITR-7</span><span>Advance Tax</span><span>TDS Returns</span><span>Capital Gains</span></div>
+      </div>
+
+      <!-- 03 GST LITIGATION — HIGHLIGHT -->
+      <div class="svc-card highlight reveal">
+        <div class="svc-num">03</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">⚖️</span></div>
+        <h3 class="svc-title">GST Litigation &amp; Appeals</h3>
+        <p class="svc-desc">Expert representation in GST show cause notices, departmental audits, scrutiny proceedings, demand orders, and appeals before the GST Appellate Authority. Also handles High Court writ petitions and GST Council representations.</p>
+        <div class="svc-tags"><span>SCN Replies</span><span>Appellate Authority</span><span>High Court</span><span>Dept. Audit</span></div>
+      </div>
+
+      <!-- 04 INCOME TAX LITIGATION — HIGHLIGHT -->
+      <div class="svc-card highlight reveal">
+        <div class="svc-num">04</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">🏛️</span></div>
+        <h3 class="svc-title">Income Tax Litigation &amp; Appeals</h3>
+        <p class="svc-desc">Drafting replies to notices under Sections 133(6), 142(1), 143(2), 148, and 263. Representation before Assessing Officers, CIT(Appeals), and Income Tax Appellate Tribunal (ITAT). Penalty waiver petitions and compounding applications.</p>
+        <div class="svc-tags"><span>CIT(A)</span><span>ITAT</span><span>Sec 148 Replies</span><span>Penalty Waiver</span></div>
+      </div>
+
+      <!-- 05 FEMA — HIGHLIGHT -->
+      <div class="svc-card highlight reveal">
+        <div class="svc-num">05</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">🌐</span></div>
+        <h3 class="svc-title">FEMA &amp; Cross-border Matters</h3>
+        <p class="svc-desc">Complete FEMA advisory — FDI &amp; ODI compliance, ECB reporting, FCGPR filings, FCTRS filings, FEMA compounding applications, repatriation of funds, NRI property transactions, and all RBI approvals for cross-border transactions.</p>
+        <div class="svc-tags"><span>FDI / ODI</span><span>FCGPR / FCTRS</span><span>Compounding</span><span>RBI Approvals</span></div>
+      </div>
+
+      <!-- 06 CMA REPORTS -->
+      <div class="svc-card reveal">
+        <div class="svc-num">06</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">🏦</span></div>
+        <h3 class="svc-title">CMA Reports for Bank Finance</h3>
+        <p class="svc-desc">Professional drafting of Credit Monitoring Arrangement (CMA) data reports for term loans, working capital limits, CC/OD facilities, project finance, and MSME loan applications. Includes fund-flow, cash-flow, and projected financial statements.</p>
+        <div class="svc-tags"><span>CMA Data</span><span>Working Capital</span><span>Term Loan</span><span>Project Finance</span></div>
+      </div>
+
+      <!-- 07 FINANCIAL MANAGEMENT -->
+      <div class="svc-card reveal">
+        <div class="svc-num">07</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">📈</span></div>
+        <h3 class="svc-title">Financial Management &amp; CFO Services</h3>
+        <p class="svc-desc">Virtual CFO and financial management — MIS reports, budgeting &amp; forecasting, working capital management, ratio analysis, financial modelling, cash flow planning, bank liaison, and board-level financial strategy and advisory.</p>
+        <div class="svc-tags"><span>MIS Reports</span><span>Budgeting</span><span>Cash Flow</span><span>Financial Modelling</span></div>
+      </div>
+
+      <!-- 08 PROJECT REPORTS / DPR -->
+      <div class="svc-card reveal">
+        <div class="svc-num">08</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">📊</span></div>
+        <h3 class="svc-title">Project Reports &amp; DPR</h3>
+        <p class="svc-desc">Preparation of Detailed Project Reports (DPR), Techno-Economic Feasibility Reports (TEFR), business plans, and projected financial statements (3–5 years) for bank loan proposals, MSME subsidies, government grants, and private investor funding.</p>
+        <div class="svc-tags"><span>DPR</span><span>TEFR</span><span>Business Plan</span><span>Projected Financials</span></div>
+      </div>
+
+      <!-- 09 STATUTORY AUDIT -->
+      <div class="svc-card reveal">
+        <div class="svc-num">09</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">📋</span></div>
+        <h3 class="svc-title">Statutory Audit &amp; Assurance</h3>
+        <p class="svc-desc">Independent statutory audits under Companies Act 2013, LLP Act, and Partnership Act. Includes tax audit under Section 44AB, GST audit (where applicable), special purpose audits, and limited review engagements.</p>
+        <div class="svc-tags"><span>Companies Act</span><span>Sec 44AB Tax Audit</span><span>LLP Audit</span><span>GST Audit</span></div>
+      </div>
+
+      <!-- 10 INTERNAL AUDIT -->
+      <div class="svc-card reveal">
+        <div class="svc-num">10</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">🔍</span></div>
+        <h3 class="svc-title">Internal Audit &amp; Risk</h3>
+        <p class="svc-desc">Systematic review of internal controls, process risk mapping, standard operating procedures, internal financial controls (IFC) testing, inventory audits, and governance reporting for management and boards.</p>
+        <div class="svc-tags"><span>IFC Testing</span><span>Process Risk</span><span>SOP Review</span><span>Inventory Audit</span></div>
+      </div>
+
+      <!-- 11 NRI TAXATION -->
+      <div class="svc-card reveal">
+        <div class="svc-num">11</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">✈️</span></div>
+        <h3 class="svc-title">NRI Taxation &amp; Advisory</h3>
+        <p class="svc-desc">End-to-end NRI tax services — residential status determination, NRE/NRO account compliance, DTAA benefit claims, property transaction TDS under Section 195, repatriation advisory, and Indian income tax return filing for NRIs.</p>
+        <div class="svc-tags"><span>DTAA</span><span>NRE/NRO</span><span>Sec 195 TDS</span><span>Repatriation</span></div>
+      </div>
+
+      <!-- 12 CORPORATE / ROC -->
+      <div class="svc-card reveal">
+        <div class="svc-num">12</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">🏢</span></div>
+        <h3 class="svc-title">Corporate &amp; ROC Compliance</h3>
+        <p class="svc-desc">Company incorporation (Pvt Ltd, OPC, Section 8), ROC annual filings, Form AOC-4 &amp; MGT-7, DIR-3 KYC, MSME / Udyam Registration, Startup India recognition, LLP formation, and all secretarial compliance management.</p>
+        <div class="svc-tags"><span>MCA Filings</span><span>AOC-4 / MGT-7</span><span>LLP</span><span>Udyam Reg.</span></div>
+      </div>
+
+      <!-- 13 BOOKKEEPING -->
+      <div class="svc-card reveal">
+        <div class="svc-num">13</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">📒</span></div>
+        <h3 class="svc-title">Bookkeeping &amp; Accounting</h3>
+        <p class="svc-desc">Comprehensive bookkeeping, preparation of financial statements (P&amp;L, Balance Sheet, Cash Flow) as per Ind AS / AS, bank reconciliation, accounts payable/receivable management, payroll accounting, and ledger management on Tally / Zoho Books.</p>
+        <div class="svc-tags"><span>Tally ERP</span><span>Zoho Books</span><span>Ind AS</span><span>Payroll</span></div>
+      </div>
+
+      <!-- 14 TDS COMPLIANCE -->
+      <div class="svc-card reveal">
+        <div class="svc-num">14</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">🔖</span></div>
+        <h3 class="svc-title">TDS / TCS Compliance</h3>
+        <p class="svc-desc">Monthly TDS computation and deposit, quarterly TDS returns (24Q, 26Q, 27Q, 27EQ), Form 16 / 16A issuance, lower deduction certificate applications (Sec 197), and TDS default notices &amp; correction rectification.</p>
+        <div class="svc-tags"><span>24Q / 26Q / 27Q</span><span>Form 16</span><span>Lower Ded. Cert.</span><span>Default Rectification</span></div>
+      </div>
+
+      <!-- 15 GST REGISTRATION & ADVISORY -->
+      <div class="svc-card reveal">
+        <div class="svc-num">15</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">🗂️</span></div>
+        <h3 class="svc-title">GST Registration &amp; Advisory</h3>
+        <p class="svc-desc">New GST registration, amendments and cancellations, GST health-check reviews, HSN/SAC classification advisory, e-invoicing and e-way bill compliance, reverse charge mechanism advisory, and GST refund applications.</p>
+        <div class="svc-tags"><span>New Registration</span><span>E-Invoicing</span><span>GST Refund</span><span>RCM Advisory</span></div>
+      </div>
+
+      <!-- 16 TAX PLANNING -->
+      <div class="svc-card reveal">
+        <div class="svc-num">16</div>
+        <div class="svc-icon-wrap"><span class="svc-icon">💡</span></div>
+        <h3 class="svc-title">Tax Planning &amp; Advisory</h3>
+        <p class="svc-desc">Year-round income tax planning for individuals, HUFs, firms, and companies. Salary structuring, Section 80C/80D/80G investment advisory, presumptive taxation under Sec 44AD/44ADA, new vs old regime analysis, and gift/inheritance planning.</p>
+        <div class="svc-tags"><span>Salary Structuring</span><span>80C / 80D</span><span>New Regime</span><span>Sec 44AD/44ADA</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why" class="section">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;">
+      <div class="tag" style="justify-content:center;"><div class="tag-line"></div><span class="tag-text">Why Choose Us</span><div class="tag-line"></div></div>
+      <h2 class="section-title" style="color:var(--white);">What Sets Us <em>Apart</em></h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <span class="why-icon">⚖️</span>
+        <div class="why-title">Litigation Expertise</div>
+        <p class="why-desc">Deep hands-on expertise in GST and Income Tax litigation — from replying to notices to representing clients before CIT(A), ITAT, and High Court.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon">🌐</span>
+        <div class="why-title">FEMA Specialists</div>
+        <p class="why-desc">One of the few CA firms in Ludhiana with dedicated expertise in FEMA matters, FDI/ODI compliance, and RBI compounding applications.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon">🏦</span>
+        <div class="why-title">Bank Finance Support</div>
+        <p class="why-desc">Expert CMA report drafting and project finance documentation that has helped clients secure term loans and working capital from major banks.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon">👤</span>
+        <div class="why-title">Direct CA Access</div>
+        <p class="why-desc">As a proprietorship firm, every client gets direct access to the CA — no junior handoffs, no generic templates, no missed calls.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon">🛡️</span>
+        <div class="why-title">Absolute Integrity</div>
+        <p class="why-desc">Every recommendation is grounded solely in your best financial and legal outcome — we never recommend arrangements that put clients at legal risk.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon">⚡</span>
+        <div class="why-title">Deadline-Driven</div>
+        <p class="why-desc">Strict adherence to GST, Income Tax, and ROC deadlines. We proactively track due dates so you never face late fees or penalties.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon">📍</span>
+        <div class="why-title">Locally Rooted</div>
+        <p class="why-desc">Based in Ludhiana's industrial belt, we deeply understand the needs of Punjab's manufacturing, hosiery, trading, and MSME ecosystem.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon">📱</span>
+        <div class="why-title">Always Accessible</div>
+        <p class="why-desc">Reach us on call or WhatsApp at +91 81950 08886 for urgent tax or compliance queries — responsive communication is our promise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="tag"><div class="tag-line"></div><span class="tag-text">Client Voices</span></div>
+      <h2 class="section-title">What Our Clients <em>Say</em></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Received a GST show cause notice and was completely panicked. The CA handled the entire SCN reply and adjudication proceedings. We got full relief within two hearings. Exceptional litigation expertise.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div><div class="testi-name">Rajesh Sood</div><div class="testi-role">Proprietor, Sood Textile Traders, Ludhiana</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Our CMA report was prepared with great detail and the bank approved our working capital limit in under three weeks. The CA personally coordinated with the branch manager. Best for bank finance documentation.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div><div class="testi-name">Sukhdeep Arora</div><div class="testi-role">Director, Arora Engineering Works, Ludhiana</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">As an NRI investing in Indian property, FEMA compliance was a maze. Kapoor Dikshit handled all RBI filings, TDS under Section 195, and repatriation paperwork seamlessly. Highly recommended for all FEMA matters.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">P</div>
+          <div><div class="testi-name">Paramjit Singh</div><div class="testi-role">NRI Client, Canada</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="tag"><div class="tag-line"></div><span class="tag-text">Get in Touch</span></div>
+      <h2 class="section-title">Let's Start a <em>Conversation</em></h2>
+    </div>
+    <div class="contact-layout">
+      <div class="reveal">
+        <p class="section-sub">Whether you need help with a GST notice, income tax return, FEMA compliance, CMA report, or financial management — we are here to help.</p>
+        <div class="contact-info-list">
+          <div class="cinfo-item">
+            <div class="cinfo-icon-box">📍</div>
+            <div>
+              <div class="cinfo-label">Office Address</div>
+              <div class="cinfo-value">B-XV-553/C/9, 1st Floor,<br>Ghaki Shah Mill, Gill Road,<br>Miller Ganj, Ludhiana,<br>Punjab – 141 003</div>
+            </div>
+          </div>
+          <div class="cinfo-item">
+            <div class="cinfo-icon-box">📱</div>
+            <div>
+              <div class="cinfo-label">Mobile / WhatsApp</div>
+              <div class="cinfo-value"><a href="tel:+918195008886">+91 81950 08886</a></div>
+            </div>
+          </div>
+          <div class="cinfo-item">
+            <div class="cinfo-icon-box">✉</div>
+            <div>
+              <div class="cinfo-label">Email</div>
+              <div class="cinfo-value"><a href="mailto:dikshitkapoor86@gmail.com">dikshitkapoor86@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="cinfo-item">
+            <div class="cinfo-icon-box">◷</div>
+            <div>
+              <div class="cinfo-label">Working Hours</div>
+              <div class="cinfo-value">Mon – Sat &nbsp;·&nbsp; 9:30 AM – 6:30 PM<br><span style="font-size:0.78rem;color:var(--text-lt);">Sunday by appointment only</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-form-card reveal">
+        <div class="mform-title">Send Us a Message</div>
+        <p class="mform-sub">We typically respond within one business day.</p>
+        <div class="mform">
+          <div class="mform-row">
+            <div class="mfield"><label>Full Name</label><input type="text" placeholder="Your full name" /></div>
+            <div class="mfield"><label>Email Address</label><input type="email" placeholder="you@example.com" /></div>
+          </div>
+          <div class="mform-row">
+            <div class="mfield"><label>Phone / WhatsApp</label><input type="tel" placeholder="+91 XXXXX XXXXX" /></div>
+            <div class="mfield"><label>Company / Business</label><input type="text" placeholder="Your company name" /></div>
+          </div>
+          <div class="mfield">
+            <label>Service Required</label>
+            <select>
+              <option value="" disabled selected>Select a service…</option>
+              <option>GST Returns &amp; Filing</option>
+              <option>Income Tax Returns (ITR)</option>
+              <option>GST Litigation &amp; Appeals</option>
+              <option>Income Tax Litigation &amp; Appeals</option>
+              <option>FEMA &amp; Cross-border Matters</option>
+              <option>CMA Report for Bank Finance</option>
+              <option>Financial Management / CFO Services</option>
+              <option>Project Report / DPR</option>
+              <option>Statutory Audit</option>
+              <option>Internal Audit &amp; Risk</option>
+              <option>NRI Taxation</option>
+              <option>Corporate / ROC Compliance</option>
+              <option>Bookkeeping &amp; Accounting</option>
+              <option>TDS / TCS Compliance</option>
+              <option>Tax Planning &amp; Advisory</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="mfield"><label>Message</label><textarea rows="4" placeholder="Briefly describe your requirement…"></textarea></div>
+          <button class="mform-btn" onclick="mainSubmit()">Submit Enquiry →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Kapoor Dikshit &amp; Associates</div>
+      <div class="footer-brand-sub">Chartered Accountants</div>
+      <div class="footer-prop-note">Proprietorship Firm · Est. 2017 · Ludhiana, Punjab</div>
+      <p class="footer-brand-desc">Professional CA services — GST, Income Tax, FEMA, Litigation, CMA Reports, and Financial Management. Delivered with integrity since 2017.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#about">About the Firm</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Key Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">GST Returns &amp; Litigation</a></li>
+        <li><a href="#services">Income Tax Returns &amp; Litigation</a></li>
+        <li><a href="#services">FEMA Matters</a></li>
+        <li><a href="#services">CMA Reports for Bank Finance</a></li>
+        <li><a href="#services">Financial Management</a></li>
+        <li><a href="#services">Statutory &amp; Internal Audit</a></li>
+        <li><a href="#services">NRI Taxation</a></li>
+        <li><a href="#services">Corporate / ROC Compliance</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-label">Address</div>
+        <div class="footer-contact-val">B-XV-553/C/9, 1st Floor, Ghaki Shah Mill, Gill Road, Miller Ganj, Ludhiana – 141 003</div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-label">Mobile / WhatsApp</div>
+        <div class="footer-contact-val"><a href="tel:+918195008886">+91 81950 08886</a></div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-label">Email</div>
+        <div class="footer-contact-val"><a href="mailto:dikshitkapoor86@gmail.com">dikshitkapoor86@gmail.com</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Kapoor Dikshit &amp; Associates. All rights reserved.</div>
+    <div class="footer-icai">ICAI Registered · Proprietorship Firm · Ludhiana, Punjab</div>
+  </div>
+</footer>
+
+<script>
+  const ham = document.getElementById('ham');
+  const mobNav = document.getElementById('mobNav');
+  ham.addEventListener('click', () => { ham.classList.toggle('open'); mobNav.classList.toggle('open'); });
+  function closeMob() { ham.classList.remove('open'); mobNav.classList.remove('open'); }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = `${(i % 4) * 0.08}s`; io.observe(el); });
+
+  const secs = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    const y = window.pageYOffset + 80;
+    secs.forEach(s => {
+      const id = s.getAttribute('id');
+      const a = document.querySelector(`.nav-links a[href="#${id}"]`);
+      if (a) a.style.color = (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) ? 'var(--gold)' : '';
+    });
+  });
+
+  function heroSubmit() { alert('Thank you! We will get back to you shortly.\n\nFor urgent matters, call / WhatsApp: +91 81950 08886'); }
+  function mainSubmit() {
+    let ok = true;
+    document.querySelectorAll('.mform input, .mform select, .mform textarea').forEach(i => { if (!i.value.trim()) ok = false; });
+    if (!ok) { alert('Please fill in all fields before submitting.'); return; }
+    alert('Thank you for your enquiry! We will be in touch shortly.\n\nFor urgent matters: +91 81950 08886 | dikshitkapoor86@gmail.com');
+  }
+</script>
+</body>
+</html>
